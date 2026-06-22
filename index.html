@@ -3,52 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECOM WINNERS RADAR</title>
+    <title>TRENDTRACKER PRO — Ecom Radar</title>
+    <!-- Chargement de Tailwind CSS et des icônes Google Font -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-gray-800 pb-6">
+<body class="bg-slate-950 text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-slate-950">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- HEADER EN FLUIDE -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-slate-800/60 pb-8 gap-4">
             <div>
-                <h1 class="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">ECOM WINNERS RADAR</h1>
-                <p class="text-gray-400 mt-1 text-sm">Mis à jour automatiquement tous les matins à 06:00 UTC</p>
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                    <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                        TRENDTRACKER <span class="text-cyan-400 font-medium">PRO</span>
+                    </h1>
+                </div>
+                <p class="text-slate-400 mt-2 text-sm font-medium">Algorithme de tracking de volumes et vélocité e-commerce</p>
             </div>
-            <div class="mt-4 md:mt-0 bg-gray-900 border border-gray-800 px-4 py-2 rounded-lg text-sm text-cyan-400 font-mono">
-                Dernier Sync: <span id="sync-time">Chargement...</span>
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <div class="bg-slate-900/80 backdrop-blur border border-slate-800 px-4 py-2.5 rounded-xl text-xs text-slate-400 font-medium shadow-xl">
+                    🔄 Prochaine synchro : <span class="text-slate-200 font-semibold">Demain, 06:00 UTC</span>
+                </div>
+                <div class="bg-cyan-950/40 border border-cyan-800/50 px-4 py-2.5 rounded-xl text-xs text-cyan-400 font-mono shadow-lg shadow-cyan-950/20">
+                    Dernier Scan: <span id="sync-time" class="font-bold">Chargement...</span>
+                </div>
             </div>
-        </div>
+        </header>
 
-        <!-- KPIs -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
-                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Produits Détectés Ce Matin</p>
-                <p id="kpi-count" class="text-3xl font-bold text-white mt-2">-</p>
+        <!-- DASHBOARD METRICS (LES FILTRES & KPI COUPLÉS) -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-slate-900/40 backdrop-blur border border-slate-800/80 p-6 rounded-2xl shadow-xl hover:border-slate-700/50 transition duration-300">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Signaux Détectés</div>
+                <div class="flex items-baseline gap-2">
+                    <span id="kpi-count" class="text-4xl font-black text-white">-</span>
+                    <span class="text-xs font-semibold text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded-full">Breakout</span>
+                </div>
             </div>
-            <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
-                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Marge Bénéficiaire Moyenne</p>
-                <p id="kpi-margin" class="text-3xl font-bold text-green-400 mt-2">-</p>
+            
+            <div class="bg-slate-900/40 backdrop-blur border border-slate-800/80 p-6 rounded-2xl shadow-xl hover:border-slate-700/50 transition duration-300">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Marge Brute Moyenne</div>
+                <div class="flex items-baseline gap-2">
+                    <span id="kpi-margin" class="text-4xl font-black text-emerald-400">-</span>
+                    <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded-full">Potentiel Top</span>
+                </div>
             </div>
-            <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl">
-                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Canal Dominant 2026</p>
-                <p id="kpi-source" class="text-3xl font-bold text-cyan-400 mt-2">-</p>
-            </div>
-        </div>
 
-        <!-- Product Grid -->
-        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🔥 Opportunités Prioritaires</h2>
-        <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Injecté par JavaScript -->
-        </div>
+            <div class="bg-slate-900/40 backdrop-blur border border-slate-800/80 p-6 rounded-2xl shadow-xl hover:border-slate-700/50 transition duration-300">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Moteur Source Dominant</div>
+                <div id="kpi-source" class="text-xl font-bold text-slate-200 mt-3 truncate">-</div>
+            </div>
+        </section>
+
+        <!-- GRILLE DES PRODUITS GAGNANTS -->
+        <main>
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-bold tracking-tight text-slate-300 flex items-center gap-2">
+                    ⚡ Flux de Produits Qualifiés
+                </h2>
+                <span class="text-xs text-slate-500 font-medium">Trié par indice d'accélération</span>
+            </div>
+            
+            <div id="products-container" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Les cartes produits seront injectées ici dynamiquement -->
+            </div>
+        </main>
+        
     </div>
 
+    <!-- SCRIPT DE RECUPERATION ET LOGIQUE DE COULEUR DES BADGES -->
     <script>
-        // Va chercher les données en temps réel sur ton API Vercel
         fetch('/api/trends')
             .then(res => res.json())
             .then(data => {
                 document.getElementById('sync-time').innerText = data.last_update;
-                document.getElementById('kpi-count').innerText = data.metrics.scouted_today + " Produits";
+                document.getElementById('kpi-count').innerText = data.metrics.scouted_today;
                 document.getElementById('kpi-margin').innerText = data.metrics.avg_margin;
                 document.getElementById('kpi-source').innerText = data.metrics.top_source;
 
@@ -56,39 +91,68 @@
                 container.innerHTML = '';
 
                 data.products.forEach(p => {
+                    // Gestion de la couleur du badge selon le canal d'acquisition
+                    let badgeColor = "bg-slate-800 text-slate-300 border-slate-700";
+                    if(p.source.includes("TikTok")) badgeColor = "bg-pink-950/40 text-pink-400 border-pink-900/50";
+                    if(p.source.includes("Amazon")) badgeColor = "bg-amber-950/40 text-amber-400 border-amber-900/50";
+                    if(p.source.includes("Google")) badgeColor = "bg-blue-950/40 text-blue-400 border-blue-900/50";
+                    if(p.source.includes("Pinterest")) badgeColor = "bg-red-950/40 text-red-400 border-red-900/50";
+
                     container.innerHTML += `
-                        <div class="bg-gray-900 border border-gray-800 p-6 rounded-xl relative overflow-hidden hover:border-gray-700 transition">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <span class="px-2 py-1 text-xs font-bold rounded bg-gray-800 text-cyan-400 uppercase">${p.source}</span>
-                                    <span class="ml-2 text-xs text-gray-400">${p.niche}</span>
-                                    <h3 class="text-xl font-bold text-white mt-2">${p.name}</h3>
+                        <div class="bg-slate-900/20 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 relative flex flex-col justify-between shadow-2xl hover:border-slate-700/60 transition duration-300 group">
+                            
+                            <!-- Top Card -->
+                            <div>
+                                <div class="flex justify-between items-start gap-4 mb-4">
+                                    <div class="truncate">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <span class="px-2.5 py-0.5 text-[10px] font-bold tracking-wider rounded-md border uppercase ${badgeColor}">${p.source}</span>
+                                            <span class="text-xs font-medium text-slate-500">${p.niche}</span>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white mt-2.5 tracking-tight group-hover:text-cyan-400 transition-colors duration-200">${p.name}</h3>
+                                    </div>
+                                    <div class="text-right shrink-0 bg-emerald-950/30 border border-emerald-900/50 px-3 py-1.5 rounded-xl">
+                                        <span class="text-emerald-400 font-extrabold text-base block">${p.growth}</span>
+                                        <p class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Vélocité</p>
+                                    </div>
                                 </div>
-                                <div class="text-right">
-                                    <span class="text-emerald-400 font-bold text-lg">${p.growth}</span>
-                                    <p class="text-xs text-gray-400">Vélocité</p>
+
+                                <!-- Box Financière -->
+                                <div class="grid grid-cols-3 gap-1 bg-slate-950/60 border border-slate-900 p-3.5 rounded-xl text-center my-5 shadow-inner">
+                                    <div>
+                                        <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Achat COGS</p>
+                                        <p class="font-bold text-slate-200 mt-0.5">${p.cost}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Prix de vente</p>
+                                        <p class="font-bold text-slate-200 mt-0.5">${p.price}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Marge Net</p>
+                                        <p class="font-black text-emerald-400 mt-0.5">${p.margin}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Description de l'angle marketing -->
+                                <div class="space-y-1 mb-6">
+                                    <h4 class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Angle & Stratégie Ads :</h4>
+                                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${p.strategy}</p>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-3 gap-2 bg-gray-950 p-3 rounded-lg text-center my-4 text-sm">
-                                <div><p class="text-gray-500 text-xs">Coût Achat</p><p class="font-bold text-white">${p.cost}</p></div>
-                                <div><p class="text-gray-500 text-xs">Prix Vente</p><p class="font-bold text-white">${p.price}</p></div>
-                                <div><p class="text-gray-500 text-xs">Marge Net</p><p class="font-bold text-green-400">${p.margin}</p></div>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-xs text-gray-400 font-semibold uppercase">Stratégie Marketing Recommandée :</p>
-                                <p class="text-sm text-gray-300 mt-1">${p.strategy}</p>
-                            </div>
-                            <div class="mt-4 flex items-center justify-between border-t border-gray-800 pt-3 text-xs">
-                                <span class="text-gray-500">Score de Viralité :</span>
-                                <div class="w-2/3 bg-gray-800 rounded-full h-2 ml-2 relative">
-                                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-2 rounded-full" style="width: ${p.virality}%"></div>
+
+                            <!-- Footer de carte : Barre de force / Vitalité -->
+                            <div class="border-t border-slate-800/80 pt-4 flex items-center justify-between gap-4 text-xs font-medium">
+                                <span class="text-slate-500 text-[11px]">Score de Virauté :</span>
+                                <div class="flex-1 bg-slate-950 rounded-full h-2 relative overflow-hidden border border-slate-900">
+                                    <div class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-2 rounded-full transition-all duration-500" style="width: ${p.virality}%"></div>
                                 </div>
-                                <span class="ml-2 font-bold text-cyan-400">${p.virality}/100</span>
+                                <span class="font-bold text-cyan-400 font-mono text-[11px] bg-cyan-950/40 px-2 py-0.5 rounded">${p.virality}/100</span>
                             </div>
+
                         </div>
                     `;
                 });
-            });
+            }).catch(err => console.error("Erreur de chargement de l'API :", err));
     </script>
 </body>
 </html>
